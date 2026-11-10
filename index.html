@@ -9,27 +9,44 @@
     <!-- FontAwesome for ikoner -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-100 min-h-screen text-slate-800 p-6 md:p-12">
+<body class="bg-slate-50 min-h-screen text-slate-800 p-6 md:p-12 antialiased">
 
-    <div class="max-w-5xl mx-auto">
+    <div class="max-w-6xl mx-auto">
         <!-- Overskrift og intro -->
-        <header class="mb-10 text-center md:text-left">
-            <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight">Tips og triks</h1>
-            <p class="text-slate-600 mt-2">Velg en kategori for å åpne verktøyene du trenger.</p>
+        <header class="mb-10 text-center md:text-left flex flex-col md:flex-row md:items-end md:justify-between gap-4 border-b border-slate-200 pb-8">
+            <div>
+                <span class="text-xs font-bold tracking-wider text-indigo-600 uppercase mb-1 block">Ressursportal</span>
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight">Tips og triks</h1>
+                <p class="text-slate-600 mt-2 text-lg">Velg en kategori for å åpne verktøyene du trenger.</p>
+            </div>
+            
+            <!-- Søkefelt for hurtignavigasjon -->
+            <div class="w-full md:w-72 relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="text" id="searchInput" placeholder="Søk i kortene..." 
+                       class="w-full pl-10 pr-4 py-2 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition">
+            </div>
         </header>
 
         <!-- Grid med fag og verktøy -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div id="cardGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
             <!-- 1. Lærerverktøy -->
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition">
+            <div class="card bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-200">
                 <div>
                     <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center text-xl mb-4">
                         <i class="fa-solid fa-chalkboard-user"></i>
                     </div>
+                    <h2 class="text-xl font-bold text-slate-900 mb-2">Lærerverktøy</h2>
+                    <p class="text-slate-500 text-sm mb-4">Verktøy for klasseledelse, organisering, timer og vurdering.</p>
+                </div>
+                <a href="laererverktoy/index.html" class="inline-flex items-center justify-center w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-sm transition">
+                    Gå til lærerverktøy <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                </a>
+            </div>
 
             <!-- 2. Engelsk -->
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition">
+            <div class="card bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-200">
                 <div>
                     <div class="w-12 h-12 bg-sky-100 text-sky-600 rounded-xl flex items-center justify-center text-xl mb-4">
                         <i class="fa-solid fa-language"></i>
@@ -43,7 +60,7 @@
             </div>
 
             <!-- 3. Samfunnsfag -->
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition">
+            <div class="card bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-200">
                 <div>
                     <div class="w-12 h-12 bg-teal-100 text-teal-600 rounded-xl flex items-center justify-center text-xl mb-4">
                         <i class="fa-solid fa-earth-americas"></i>
@@ -57,7 +74,7 @@
             </div>
 
             <!-- 4. Diverse -->
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition">
+            <div class="card bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition-all duration-200">
                 <div>
                     <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl mb-4">
                         <i class="fa-solid fa-cubes"></i>
@@ -73,5 +90,23 @@
         </div>
     </div>
 
+    <!-- Enkel søkefunksjonalitet -->
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const cards = document.querySelectorAll('.card');
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            cards.forEach(card => {
+                const title = card.querySelector('h2').textContent.toLowerCase();
+                const desc = card.querySelector('p').textContent.toLowerCase();
+                if (title.includes(query) || desc.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
